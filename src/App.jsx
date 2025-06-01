@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import './App.css'
+import { WishlistedItems } from './components/WishlistedItem';
 
 function App() {
 
@@ -17,16 +18,6 @@ function App() {
     setWishlist(''); //clear the input
   }
 
-  const onDeleteClick = (id) => {
-    const filteredArr = arrOfWishlist.filter(wishlist => wishlist.id !== id);
-    setArrOfWishlit(filteredArr)
-  }
-
-  const onWishCheckChange = (id) => {
-    const updatedWishlist = arrOfWishlist.map(wishlist => wishlist.id === id ? {...wishlist, isCompleted: !wishlist.isCompleted} : wishlist);
-    setArrOfWishlit(updatedWishlist)
-  }
-
   return (
     <>
       <h1>Your Wishlist</h1>
@@ -36,15 +27,7 @@ function App() {
       </div>
       <div>
         {
-          arrOfWishlist.map(({id, wishlist, isCompleted}) => (
-            <div key={id}>
-              <label>
-                <input checked={isCompleted} onChange={() => onWishCheckChange(id)} type='checkbox'/>
-                <span className={isCompleted ? 'strike' : ''}>{wishlist}</span>
-              </label>            
-              <button onClick={() => onDeleteClick(id)}>Delete</button>
-            </div>
-          ))
+          arrOfWishlist.map(({id, wishlist, isCompleted}) => <WishlistedItems key={id} id={id} wishlist={wishlist} isCompleted={isCompleted} arrOfWishlist={arrOfWishlist} setArrOfWishlit={setArrOfWishlit}  />)
         }
       </div>
     </>
